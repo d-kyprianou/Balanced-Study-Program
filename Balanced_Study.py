@@ -10,7 +10,7 @@ def get_study_guide_structure():
     num_sections = int(input("How many sections in the study guide? "))
     
     for i in range(1, num_sections + 1):
-        num_subsections = int(input(f"How many subsections are in Section {i}? "))
+        num_subsections = int(input(f"How many questions are in Section {i}? "))
         sections[i] = num_subsections
         total_problems += num_subsections
 
