@@ -1,16 +1,24 @@
 import random
 
-print("Welcome to the weighted study guide. We'll need some information to properly randomize and give you a balanced study.")
-print("-----")
+def get_valid_integer(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value < 1:
+                print("Whoops, please enter a positive integer.")
+            else:
+                return value
+        except ValueError:
+            print("Whoops, please enter a valid integer.")
 
 def get_study_guide_structure():
     sections = {}
     total_problems = 0
     
-    num_sections = int(input("How many sections in the study guide? "))
+    num_sections = get_valid_integer("How many sections in the study guide? ")
     
     for i in range(1, num_sections + 1):
-        num_subsections = int(input(f"How many questions are in Section {i}? "))
+        num_subsections = get_valid_integer(f"How many problems are in Section {i}? ")
         sections[i] = num_subsections
         total_problems += num_subsections
 
@@ -25,18 +33,23 @@ def pick_random_problem(sections, total_problems):
     return random.choice(weighted_choices)
 
 def main():
+    print("Welcome to the weighted study guide. We'll need some information to properly randomize and give you a balanced study.")
+    print("-----")
+    
     sections, total_problems = get_study_guide_structure()
+    problem_count = 0
     
     while True:
-        prompt = input("\nReady for a problem? (y/n): ").strip().lower()
+        prompt = input(f"\nReady for problem {problem_count + 1}? (y/n): ").strip().lower()
         if prompt == "n":
-            print("Good luck on the exam, soldier.")
+            print(f"Good luck on the exam! You attempted {problem_count} problems.")
             break
         elif prompt == "y":
             section, subsection = pick_random_problem(sections, total_problems)
-            print(f"\nTry {section}, Subsection {subsection}.\n")
+            problem_count += 1
+            print(f"\n         Try Section {section}, problem {subsection}.")
         else:
-            print("Please enter 'y' or 'n'.")
+            print("That won't work! Try 'y' or 'n'.")
 
 if __name__ == "__main__":
     main()
